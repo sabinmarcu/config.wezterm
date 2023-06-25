@@ -22,14 +22,16 @@ local nvimKeys = {
 	{ key = "s", mods = "CMD", action = act.SendString("\x1b\x3a\x77\x0a") }, -- save vim buffer
 	{ key = "z", mods = "CMD|SHIFT", action = act.SendString("\x12") }, -- reundo in nvim
 	{ key = "z", mods = "CMD", action = act.SendString("\x1bu") }, -- undo in nvim
-	{ key = "w", mods = "CMD", action = act.SendString("\x1b\x3a\x71\x0a") }, -- quit vim
+	{ key = "w", mods = "CMD", action = act.SendString("\x1b\x3a\x71\x0a") }, -- quit nvim
+	{ key = "l", mods = "CTRL|SHIFT", action = act.SendString("\x1b\x20\x77\x7c\x0a") }, -- vertical split
+	{ key = "j", mods = "CTRL|SHIFT", action = act.SendString("\x1b\x20\x77\x2d\x0a") }, -- horizontal split
 }
 
 local tmuxKeys = {
 	{ key = "l", mods = "CMD|SHIFT", action = act.SendString("\x02l") }, -- right pane
 	{ key = "h", mods = "CMD|SHIFT", action = act.SendString("\x02h") }, -- left pane
-	{ key = "j", mods = "CMD|SHIFT", action = act.SendString("\x02j") }, -- top pane
-	{ key = "k", mods = "CMD|SHIFT", action = act.SendString("\x02k") }, -- bottom pane
+	{ key = "j", mods = "CMD|SHIFT", action = act.SendString("\x02j") }, -- bottom pane
+	{ key = "k", mods = "CMD|SHIFT", action = act.SendString("\x02k") }, -- top pane
 	{ key = "[", mods = "CMD|SHIFT", action = act.SendString("\x02p") }, -- switch to next tmux window
 	{ key = "]", mods = "CMD|SHIFT", action = act.SendString("\x02n") }, -- switch to previous tmux window
 	{ key = ";", mods = "CMD", action = act.SendString("\x02:") }, -- enter the tmux command prompt
