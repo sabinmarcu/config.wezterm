@@ -1,15 +1,38 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
+local function mergeInto(t1, t2)
+	for k, v in pairs(t2) do
+		if type(v) == "table" then
+			t1[k] = {}
+			mergeInto(t1[k], t2[k])
+		end
+		t1[k] = v
+	end
+end
+
+local function merge(t1, t2)
+	local merged = {}
+	mergeInto(merged, t1)
+	mergeInto(merged, t2)
+	return merged
+end
+
+local nvimKeys = {
+	{ key = "s", mods = "CMD", action = act.SendString("\x1b\x3a\x77\x0a") }, -- save vim buffer
+	{ key = "z", mods = "CMD|SHIFT", action = act.SendString("\x12") }, -- reundo in nvim
+	{ key = "z", mods = "CMD", action = act.SendString("\x1bu") }, -- undo in nvim
+	{ key = "w", mods = "CMD", action = act.SendString("\x1b\x3a\x71\x0a") }, -- quit vim
+}
+
 local tmuxKeys = {
-	--- TMUX
 	{ key = "l", mods = "CMD|SHIFT", action = act.SendString("\x02l") }, -- right pane
 	{ key = "h", mods = "CMD|SHIFT", action = act.SendString("\x02h") }, -- left pane
 	{ key = "j", mods = "CMD|SHIFT", action = act.SendString("\x02j") }, -- top pane
 	{ key = "k", mods = "CMD|SHIFT", action = act.SendString("\x02k") }, -- bottom pane
 	{ key = "[", mods = "CMD|SHIFT", action = act.SendString("\x02p") }, -- switch to next tmux window
 	{ key = "]", mods = "CMD|SHIFT", action = act.SendString("\x02n") }, -- switch to previous tmux window
-	{ key = ";", mods = "CMD", action = act.SendString("\x02=") }, -- enter the tmux command prompt
+	{ key = ";", mods = "CMD", action = act.SendString("\x02:") }, -- enter the tmux command prompt
 	{ key = "p", mods = "CMD|SHIFT", action = act.SendString("\x02F") }, -- tmux fzf
 	{ key = "1", mods = "CMD", action = act.SendString("\x021") }, -- select tmux window 1
 	{ key = "2", mods = "CMD", action = act.SendString("\x022") }, --                ... 2
@@ -24,19 +47,14 @@ local tmuxKeys = {
 	{ key = "Tab", mods = "CTRL|SHIFT", action = act.SendString("\x02p") }, -- switch to previous tmux window
 	{ key = ",", mods = "CMD", action = act.SendString("\x02,") }, -- rename the current tmux window
 	{ key = "z", mods = "CMD|SHIFT", action = act.SendString("\x02z") }, -- toggle zoom state of the current tmux pane
-	{ key = "k", mods = "CMD", action = act.SendString("\x02s") }, -- open interactive tmux session client
 	{ key = "t", mods = "CMD", action = act.SendString("\x02c") }, -- create a new tmux window
-	{ key = "w", mods = "CMD", action = act.SendString("\x02x") }, -- kill the current pane
+	{ key = "x", mods = "CMD", action = act.SendString("\x02x") }, -- kill the current pane
 	{ key = "e", mods = "CMD", action = act.SendString('\x02"') }, -- split tmux window vertically
 	{ key = "e", mods = "CMD|SHIFT", action = act.SendString("\x02%") }, -- split tmux window horizontally
 	{ key = "f", mods = "CMD|SHIFT", action = act.SendString("\x02\x5b\x2f") }, -- start tmux search mode
+	{ key = "k", mods = "CMD", action = act.SendString("\x02s") }, -- open interactive tmux session client
 	{ key = "j", mods = "CMD", action = act.SendString("\x02\x54") }, -- open t - tmux smart session manager
-
-	--- NVIM
-	{ key = "s", mods = "CMD", action = act.SendString("\x1b\x3a\x77\x0a") }, -- save vim buffer
-	{ key = "z", mods = "CMD|SHIFT", action = act.SendString("\x12") }, -- reundo in nvim
-	{ key = "z", mods = "CMD", action = act.SendString("\x1bu") }, -- undo in nvim
-	{ key = "x", mods = "CMD", action = act.SendString("\x1b\x3a\x71\x0a") }, -- quit vim
+	{ key = "l", mods = "CMD", action = act.SendString("\x02l") }, -- open t - tmux smart session manager
 }
 
 -- local weztermKeys = {
@@ -69,5 +87,5 @@ local tmuxKeys = {
 -- }
 
 return function(config)
-	config.keys = tmuxKeys
+	config.keys = merge(tmuxKeys, nvimKeys)
 end
