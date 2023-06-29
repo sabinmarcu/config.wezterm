@@ -23,8 +23,8 @@ local nvimKeys = {
 	{ key = "z", mods = "CMD|SHIFT", action = act.SendString("\x12") }, -- reundo in nvim
 	{ key = "z", mods = "CMD", action = act.SendString("\x1bu") }, -- undo in nvim
 	{ key = "w", mods = "CMD", action = act.SendString("\x1b\x3a\x71\x0a") }, -- quit nvim
-	{ key = "l", mods = "CTRL|SHIFT", action = act.SendString("\x1b\x20\x77\x7c\x0a") }, -- vertical split
-	{ key = "j", mods = "CTRL|SHIFT", action = act.SendString("\x1b\x20\x77\x2d\x0a") }, -- horizontal split
+	-- { key = "l", mods = "CTRL|SHIFT", action = act.SendString("\x1b\x20\x77\x7c\x0a") }, -- vertical split
+	-- { key = "j", mods = "CTRL|SHIFT", action = act.SendString("\x1b\x20\x77\x2d\x0a") }, -- horizontal split
 }
 
 local tmuxKeys = {
