@@ -16,4 +16,5 @@ return function(config)
 		top = 0,
 		bottom = 0,
 	}
+	config.window_decorations = "RESIZE"
 end
