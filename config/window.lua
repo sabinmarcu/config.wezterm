@@ -6,7 +6,7 @@ return function(config)
 			"MonoLisa Variable",
 			"Symbols Nerd Font Mono",
 		}),
-		font_size = 12.0,
+		font_size = 15.0,
 		active_titlebar_bg = "#333333",
 		inactive_titlebar_bg = "#333333",
 	}
